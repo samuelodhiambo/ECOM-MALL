@@ -2,6 +2,7 @@ package com.moringaschool.ecommall;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -33,5 +34,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Toast.makeText(this, "You clicked " + products[position], Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(MainActivity.this, ProductItemActivity.class);
+        intent.putExtra("product", products[position]);
+        startActivity(intent);
     }
 }
