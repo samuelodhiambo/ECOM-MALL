@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         ProductAdapter adapter = new ProductAdapter(MainActivity.this, products);
         productsGrid.setAdapter(adapter);
+        productsGrid.setOnItemClickListener(this);
 
         searchInput.setOnQueryTextListener(this);
 
