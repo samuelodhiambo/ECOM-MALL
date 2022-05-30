@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +17,8 @@ public class ProductItemActivity extends AppCompatActivity implements View.OnCli
     ImageView backArrow;
     @BindView(R.id.itemName)
     TextView itemName;
+    @BindView(R.id.addToCartButton)
+    Button addToCartButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +27,7 @@ public class ProductItemActivity extends AppCompatActivity implements View.OnCli
         ButterKnife.bind(this);
 
         backArrow.setOnClickListener(this);
+        addToCartButton.setOnClickListener(this);
 
         Intent intent = getIntent();
         String item = intent.getStringExtra("product");
@@ -34,6 +38,10 @@ public class ProductItemActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         if (v == backArrow) {
             this.finish();
+        }
+        if (v == addToCartButton) {
+            Intent intent = new Intent(ProductItemActivity.this, CartActivity.class);
+            startActivity(intent);
         }
     }
 }
