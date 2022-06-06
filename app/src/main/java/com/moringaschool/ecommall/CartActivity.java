@@ -5,6 +5,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -14,7 +16,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CartActivity extends AppCompatActivity {
+public class CartActivity extends AppCompatActivity implements View.OnClickListener {
+    @BindView(R.id.backArrow)
+    ImageView backArrow;
     @BindView(R.id.cartTable)
     TableLayout cartTable;
 
@@ -23,6 +27,8 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
         ButterKnife.bind(this);
+
+        backArrow.setOnClickListener(this);
 
         // dummy data
         TableRow row = new TableRow(this);
@@ -57,5 +63,12 @@ public class CartActivity extends AppCompatActivity {
 
     public ArrayList getCart() {
         return new ArrayList();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == backArrow){
+            this.finish();
+        }
     }
 }
