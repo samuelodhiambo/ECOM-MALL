@@ -1,67 +1,63 @@
 package com.moringaschool.ecommall;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationBarView;
+import com.moringaschool.ecommall.databinding.ActivityMainBinding;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, SearchView.OnQueryTextListener {
-    private String searchTerm;
-    @BindView(R.id.productsGrid)
-    GridView productsGrid;
-    @BindView(R.id.searchInput)
-    SearchView searchInput;
+public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
-    String[] products = new String[]{"product1", "product2", "product3", "product4", "product5"};
+    ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        replaceFragment(new HomeFragment());
 
-        ProductAdapter adapter = new ProductAdapter(MainActivity.this, products);
-        productsGrid.setAdapter(adapter);
-        productsGrid.setOnItemClickListener(this);
-
-        searchInput.setOnQueryTextListener(this);
+        binding.bottomNavigationView.setOnItemSelectedListener(this);
 
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(this, "You clicked " + products[position], Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(MainActivity.this, ProductItemActivity.class);
-        intent.putExtra("product", products[position]);
-        startActivity(intent);
-    }
 
     @Override
-    public boolean onQueryTextSubmit(String query) {
-        searchTerm = searchInput.getQuery().toString();
-        if (searchTerm.length() <= 2){
-            Toast.makeText(this, "Search query is too short: " + searchTerm, Toast.LENGTH_SHORT).show();
-            return false;
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.home){
+            replaceFragment(new HomeFragment());
         }
-        Toast.makeText(this, "You searched for " + searchTerm, Toast.LENGTH_SHORT).show();
+
+        if (item.getItemId() == R.id.settings){
+            replaceFragment(new SettingsFragment());
+        }
+
+        if (item.getItemId() == R.id.profile){
+            replaceFragment(new ProfileFragment());
+        }
         return true;
     }
 
-    @Override
-    public boolean onQueryTextChange(String newText) {
-//        searchTerm = searchInput.getQuery().toString();
-//        if (searchTerm.length() == 0){
-//            return false;
-//        }
-//        Toast.makeText(this, "You searched for " + searchTerm, Toast.LENGTH_SHORT).show();
-        return false;
+    private void replaceFragment(Fragment fragment){
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.replace(R.id.main_frame, fragment);
+        fragmentTransaction.commit();
     }
 }
