@@ -22,6 +22,10 @@ android {
         }
     }
 
+    buildTypes.each {
+        it.buildConfigField 'String', 'COMMERCEJS_API_KEY', CommerceJsApiKey
+    }
+
     buildFeatures{
         viewBinding true
     }
@@ -46,4 +50,10 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
     testImplementation 'org.robolectric:robolectric:4.4'
     implementation 'com.squareup.picasso:picasso:2.8'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    // html to text
+    implementation 'org.jsoup:jsoup:1.15.1'
+    // shimmer animation
+    implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
 }
