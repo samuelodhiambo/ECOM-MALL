@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,19 @@ import android.widget.GridView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
+import com.moringaschool.ecommall.Connections.CommerceApiClient;
+import com.moringaschool.ecommall.Interfaces.ProductsInterface;
+import com.moringaschool.ecommall.Models.Products.Datum;
+import com.moringaschool.ecommall.Models.Products.Product;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +37,8 @@ import butterknife.ButterKnife;
 public class HomeFragment extends Fragment implements AdapterView.OnItemClickListener, SearchView.OnQueryTextListener, View.OnClickListener {
 
     private String searchTerm;
+    @BindView(R.id.shimmerLoading)
+    ShimmerFrameLayout shimmerLoading;
     @BindView(R.id.cartButton)
     ConstraintLayout cartButton;
     @BindView(R.id.productsGrid)
@@ -32,7 +46,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
     @BindView(R.id.searchInput)
     SearchView searchInput;
 
-    String[] products = new String[]{"product1", "product2", "product3", "product4", "product5"};
+    List<Datum> products;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -80,8 +94,36 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
 
-        ProductAdapter adapter = new ProductAdapter(getActivity(), products);
-        productsGrid.setAdapter(adapter);
+        productsGrid.setVisibility(View.INVISIBLE);
+        shimmerLoading.startShimmerAnimation();
+
+//        ProductAdapter adapter = new ProductAdapter(getActivity(), products);
+//        productsGrid.setAdapter(adapter);
+
+        ProductsInterface productsInterface = CommerceApiClient.getApiInstance().create(ProductsInterface.class);
+        Call<Product> productCall = productsInterface.getAllProducts();
+        productCall.enqueue(new Callback<Product>() {
+            @Override
+            public void onResponse(Call<Product> call, Response<Product> response) {
+                List<Datum> data = response.body().getData();
+                products = data;
+                for (Datum datum1: data){
+                    Log.i("API DATA: ", datum1.getName());
+                }
+
+                ProductAdapter adapter = new ProductAdapter(getActivity(), response.body().getData());
+                productsGrid.setAdapter(adapter);
+                productsGrid.setVisibility(View.VISIBLE);
+                shimmerLoading.stopShimmerAnimation();
+                shimmerLoading.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onFailure(Call<Product> call, Throwable t) {
+                Log.e("API ERROR: ", t.getMessage());
+            }
+        });
+
         productsGrid.setOnItemClickListener(this);
 
         searchInput.setOnQueryTextListener(this);
@@ -93,9 +135,9 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(getActivity(), "You clicked " + products[position], Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "You clicked " + products.get(position).getName(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getActivity(), ProductItemActivity.class);
-        intent.putExtra("product", products[position]);
+        intent.putExtra("product", products.get(position));
         startActivity(intent);
     }
 
