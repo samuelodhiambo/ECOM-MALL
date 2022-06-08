@@ -9,6 +9,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.moringaschool.ecommall.Models.Products.Datum;
+import com.squareup.picasso.Picasso;
+
+import org.jsoup.Jsoup;
+
+import java.io.Serializable;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -19,6 +27,12 @@ public class ProductItemActivity extends AppCompatActivity implements View.OnCli
     TextView itemName;
     @BindView(R.id.addToCartButton)
     Button addToCartButton;
+    @BindView(R.id.productItemImage)
+    ImageView productItemImage;
+    @BindView(R.id.productItemPrice)
+    TextView productItemPrice;
+    @BindView(R.id.productItemDescription)
+    TextView productItemDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +44,12 @@ public class ProductItemActivity extends AppCompatActivity implements View.OnCli
         addToCartButton.setOnClickListener(this);
 
         Intent intent = getIntent();
-        String item = intent.getStringExtra("product");
-        itemName.setText(item);
+        Serializable item = intent.getSerializableExtra("product");
+        Datum product = (Datum) item;
+        itemName.setText(product.getName());
+        Picasso.get().load(product.getImage().getUrl()).into(productItemImage);
+        productItemPrice.setText(product.getPrice().getFormattedWithSymbol());
+        productItemDescription.setText(Jsoup.parse(product.getDescription()).text());
     }
 
     @Override
