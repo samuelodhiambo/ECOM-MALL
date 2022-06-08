@@ -2,25 +2,15 @@ package com.moringaschool.ecommall;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationBarView;
 import com.moringaschool.ecommall.databinding.ActivityMainBinding;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
@@ -48,8 +38,8 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
             replaceFragment(new SettingsFragment());
         }
 
-        if (item.getItemId() == R.id.profile){
-            replaceFragment(new ProfileFragment());
+        if (item.getItemId() == R.id.categories){
+            replaceFragment(new CategoriesFragment());
         }
         return true;
     }
