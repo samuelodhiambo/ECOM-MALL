@@ -30,8 +30,8 @@ public class CommerceApiClient {
 
         if (retrofit == null){
             retrofit = new Retrofit.Builder()
-                    .baseUrl(Constants.BASE_URL)
                     .client(client)
+                    .baseUrl(Constants.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
