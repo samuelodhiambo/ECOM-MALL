@@ -1,10 +1,15 @@
-package com.moringaschool.ecommall;
+package com.moringaschool.ecommall.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,10 +21,15 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.moringaschool.ecommall.Adapters.ProductAdapter;
 import com.moringaschool.ecommall.Connections.CommerceApiClient;
 import com.moringaschool.ecommall.Interfaces.ProductsInterface;
 import com.moringaschool.ecommall.Models.Products.Datum;
 import com.moringaschool.ecommall.Models.Products.Product;
+import com.moringaschool.ecommall.R;
+import com.moringaschool.ecommall.Utilities.SearchUtility;
 
 import java.util.List;
 
@@ -112,6 +122,12 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                 }
 
                 ProductAdapter adapter = new ProductAdapter(getActivity(), response.body().getData());
+
+                int width = Resources.getSystem().getDisplayMetrics().widthPixels;
+                int height = Resources.getSystem().getDisplayMetrics().heightPixels;
+                if (width > height){
+                    productsGrid.setNumColumns(4);
+                }
                 productsGrid.setAdapter(adapter);
                 productsGrid.setVisibility(View.VISIBLE);
                 shimmerLoading.stopShimmerAnimation();
@@ -121,12 +137,28 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
             @Override
             public void onFailure(Call<Product> call, Throwable t) {
                 Log.e("API ERROR: ", t.getMessage());
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                //Setting message manually and performing action on button click
+                builder.setMessage("You have no internet connection!!!")
+                        .setCancelable(false)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                //Creating dialog box
+                AlertDialog alert = builder.create();
+                //Setting the title manually
+                alert.setTitle("Connection Problem");
+                alert.show();
             }
         });
 
         productsGrid.setOnItemClickListener(this);
 
-        searchInput.setOnQueryTextListener(this);
+//        searchInput.setOnQueryTextListener(this);
+        SearchUtility searchUtility = new SearchUtility(searchInput, productsGrid, getContext(),getParentFragmentManager());
+        searchUtility.search();
 
         cartButton.setOnClickListener(this);
         // Inflate the layout for this fragment
@@ -149,6 +181,35 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
             return false;
         }
         Toast.makeText(getActivity(), "You searched for " + searchTerm, Toast.LENGTH_SHORT).show();
+        ProductsInterface productsInterface = CommerceApiClient.getApiInstance().create(ProductsInterface.class);
+        Call<Product> productCall = productsInterface.searchProducts(searchTerm);
+        productCall.enqueue(new Callback<Product>() {
+            @Override
+            public void onResponse(Call<Product> call, Response<Product> response) {
+                List<Datum> searchProducts = response.body().getData();
+                ProductAdapter adapter = new ProductAdapter(getContext(), searchProducts);
+                productsGrid.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<Product> call, Throwable t) {
+                Log.e("API ERROR: ", t.getMessage());
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                //Setting message manually and performing action on button click
+                builder.setMessage("You have no internet connection!!!")
+                        .setCancelable(false)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                //Creating dialog box
+                AlertDialog alert = builder.create();
+                //Setting the title manually
+                alert.setTitle("Connection Problem");
+                alert.show();
+            }
+        });
         return true;
     }
 
