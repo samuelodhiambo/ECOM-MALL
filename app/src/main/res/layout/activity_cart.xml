@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/shopping"
+    android:background="#E9F4F5"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="#80000000"
-        tools:context=".CartActivity">
+        tools:context=".ui.CartActivity">
 
         <ImageView
             android:id="@+id/backArrow"
