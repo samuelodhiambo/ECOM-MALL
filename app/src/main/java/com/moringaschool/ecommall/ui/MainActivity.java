@@ -1,4 +1,4 @@
-package com.moringaschool.ecommall;
+package com.moringaschool.ecommall.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationBarView;
+import com.moringaschool.ecommall.R;
 import com.moringaschool.ecommall.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
