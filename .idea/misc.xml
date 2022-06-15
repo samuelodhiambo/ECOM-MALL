@@ -3,23 +3,31 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/bottom_nav_color_selector.xml" value="0.186" />
+        <entry key="app/src/main/res/drawable/ic_baseline_category_24.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.296" />
         <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.296" />
         <entry key="app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.296" />
         <entry key="app/src/main/res/drawable/rounded_gray_background.xml" value="0.296" />
         <entry key="app/src/main/res/drawable/search_border.xml" value="0.296" />
         <entry key="app/src/main/res/layout-land/activity_main.xml" value="0.2976190476190476" />
+        <entry key="app/src/main/res/layout-land/fragment_home.xml" value="0.2976190476190476" />
         <entry key="app/src/main/res/layout/activity_cart.xml" value="0.3515625" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_product_item.xml" value="0.3515625" />
+        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.16302083333333334" />
+        <entry key="app/src/main/res/layout/category_item.xml" value="0.33" />
         <entry key="app/src/main/res/layout/drawer_layout.xml" value="0.3515625" />
+        <entry key="app/src/main/res/layout/fragment_categories.xml" value="0.31068840579710144" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.31068840579710144" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.31068840579710144" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.31068840579710144" />
         <entry key="app/src/main/res/layout/product_item.xml" value="0.35052083333333334" />
         <entry key="app/src/main/res/layout/products_placeholder.xml" value="0.31068840579710144" />
+        <entry key="app/src/main/res/layout/test_join.xml" value="0.17760416666666667" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.35052083333333334" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.17578125" />
+        <entry key="app/src/main/res/xml/network_security_config.xml" value="0.17864583333333334" />
       </map>
     </option>
   </component>
