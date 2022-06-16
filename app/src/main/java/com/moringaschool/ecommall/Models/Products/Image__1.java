@@ -26,7 +26,7 @@ public class Image__1 implements Serializable
     private String filename;
     @SerializedName("file_size")
     @Expose
-    private Integer fileSize;
+    private Long fileSize;
     @SerializedName("file_extension")
     @Expose
     private String fileExtension;
@@ -38,10 +38,10 @@ public class Image__1 implements Serializable
     private List<Object> meta = null;
     @SerializedName("created_at")
     @Expose
-    private Integer createdAt;
+    private Long createdAt;
     @SerializedName("updated_at")
     @Expose
-    private Integer updatedAt;
+    private Long updatedAt;
     private final static long serialVersionUID = -4850794063651792866L;
 
     /**
@@ -65,7 +65,7 @@ public class Image__1 implements Serializable
      * @param url
      * @param updatedAt
      */
-    public Image__1(String id, String url, Object description, Boolean isImage, String filename, Integer fileSize, String fileExtension, ImageDimensions__1 imageDimensions, List<Object> meta, Integer createdAt, Integer updatedAt) {
+    public Image__1(String id, String url, Object description, Boolean isImage, String filename, Long fileSize, String fileExtension, ImageDimensions__1 imageDimensions, List<Object> meta, Long createdAt, Long updatedAt) {
         super();
         this.id = id;
         this.url = url;
@@ -120,11 +120,11 @@ public class Image__1 implements Serializable
         this.filename = filename;
     }
 
-    public Integer getFileSize() {
+    public Long getFileSize() {
         return fileSize;
     }
 
-    public void setFileSize(Integer fileSize) {
+    public void setFileSize(Long fileSize) {
         this.fileSize = fileSize;
     }
 
@@ -152,19 +152,19 @@ public class Image__1 implements Serializable
         this.meta = meta;
     }
 
-    public Integer getCreatedAt() {
+    public Long getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Integer createdAt) {
+    public void setCreatedAt(Long createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Integer getUpdatedAt() {
+    public Long getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Integer updatedAt) {
+    public void setUpdatedAt(Long updatedAt) {
         this.updatedAt = updatedAt;
     }
 

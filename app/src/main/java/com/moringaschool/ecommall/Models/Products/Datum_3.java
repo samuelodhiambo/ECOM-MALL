@@ -1,12 +1,13 @@
 
 package com.moringaschool.ecommall.Models.Products;
 
-import java.io.Serializable;
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Datum implements Serializable
+import java.io.Serializable;
+import java.util.List;
+
+public class Datum_3 implements Serializable
 {
 
     @SerializedName("id")
@@ -14,13 +15,13 @@ public class Datum implements Serializable
     private String id;
     @SerializedName("created")
     @Expose
-    private Integer created;
+    private Long created;
     @SerializedName("quantity")
     @Expose
-    private Integer quantity;
+    private Long quantity;
     @SerializedName("updated")
     @Expose
-    private Integer updated;
+    private Long updated;
     @SerializedName("active")
     @Expose
     private Boolean active;
@@ -35,10 +36,10 @@ public class Datum implements Serializable
     private String description;
     @SerializedName("price")
     @Expose
-    private Price price;
+    private Price__1 price;
     @SerializedName("inventory")
     @Expose
-    private Inventory inventory;
+    private Inventory_1 inventory;
     @SerializedName("checkout_url")
     @Expose
     private CheckoutUrl checkoutUrl;
@@ -50,7 +51,7 @@ public class Datum implements Serializable
     private List<Category> categories = null;
     @SerializedName("image")
     @Expose
-    private Image image;
+    private Image__1 image;
     @SerializedName("related_products")
     @Expose
     private List<RelatedProduct> relatedProducts = null;
@@ -58,9 +59,9 @@ public class Datum implements Serializable
 
     /**
      * No args constructor for use in serialization
-     * 
+     *
      */
-    public Datum() {
+    public Datum_3() {
     }
 
     /**
@@ -80,7 +81,7 @@ public class Datum implements Serializable
      * @param image
      * @param relatedProducts
      */
-    public Datum(String id, Integer created, Integer quantity, Integer updated, Boolean active, String permalink, String name, String description, Price price, Inventory inventory, CheckoutUrl checkoutUrl, List<VariantGroup> variantGroups, List<Category> categories, Image image, List<RelatedProduct> relatedProducts) {
+    public Datum_3(String id, Long created, Long quantity, Long updated, Boolean active, String permalink, String name, String description, Price__1 price, Inventory_1 inventory, CheckoutUrl checkoutUrl, List<VariantGroup> variantGroups, List<Category> categories, Image__1 image, List<RelatedProduct> relatedProducts) {
         super();
         this.id = id;
         this.created = created;
@@ -99,7 +100,7 @@ public class Datum implements Serializable
         this.relatedProducts = relatedProducts;
     }
 
-    public Datum(String id, Integer created, Integer updated, Boolean active, String permalink, String name, String description, Price price, Inventory inventory, CheckoutUrl checkoutUrl, List<VariantGroup> variantGroups, List<Category> categories, Image image, List<RelatedProduct> relatedProducts) {
+    public Datum_3(String id, Long created, Long updated, Boolean active, String permalink, String name, String description, Price__1 price, Inventory_1 inventory, CheckoutUrl checkoutUrl, List<VariantGroup> variantGroups, List<Category> categories, Image__1 image, List<RelatedProduct> relatedProducts) {
         super();
         this.id = id;
         this.created = created;
@@ -125,19 +126,19 @@ public class Datum implements Serializable
         this.id = id;
     }
 
-    public Integer getCreated() {
+    public Long getCreated() {
         return created;
     }
 
-    public void setCreated(Integer created) {
+    public void setCreated(Long created) {
         this.created = created;
     }
 
-    public Integer getUpdated() {
+    public Long getUpdated() {
         return updated;
     }
 
-    public void setUpdated(Integer updated) {
+    public void setUpdated(Long updated) {
         this.updated = updated;
     }
 
@@ -173,19 +174,19 @@ public class Datum implements Serializable
         this.description = description;
     }
 
-    public Price getPrice() {
+    public Price__1 getPrice() {
         return price;
     }
 
-    public void setPrice(Price price) {
+    public void setPrice(Price__1 price) {
         this.price = price;
     }
 
-    public Inventory getInventory() {
+    public Inventory_1 getInventory() {
         return inventory;
     }
 
-    public void setInventory(Inventory inventory) {
+    public void setInventory(Inventory_1 inventory) {
         this.inventory = inventory;
     }
 
@@ -213,11 +214,11 @@ public class Datum implements Serializable
         this.categories = categories;
     }
 
-    public Image getImage() {
+    public Image__1 getImage() {
         return image;
     }
 
-    public void setImage(Image image) {
+    public void setImage(Image__1 image) {
         this.image = image;
     }
 
@@ -228,18 +229,18 @@ public class Datum implements Serializable
     public void setRelatedProducts(List<RelatedProduct> relatedProducts) {
         this.relatedProducts = relatedProducts;
     }
-    public Integer getQuantity() {
+    public Long getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(Datum.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(Datum_3.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("id");
         sb.append('=');
         sb.append(((this.id == null)?"<null>":this.id));
@@ -333,10 +334,10 @@ public class Datum implements Serializable
         if (other == this) {
             return true;
         }
-        if ((other instanceof Datum) == false) {
+        if ((other instanceof Datum_3) == false) {
             return false;
         }
-        Datum rhs = ((Datum) other);
+        Datum_3 rhs = ((Datum_3) other);
         return (((((((((((((((this.image == rhs.image)||((this.image!= null)&&this.image.equals(rhs.image)))&&((this.created == rhs.created)||((this.created!= null)&&this.created.equals(rhs.created))))&&((this.relatedProducts == rhs.relatedProducts)||((this.relatedProducts!= null)&&this.relatedProducts.equals(rhs.relatedProducts))))&&((this.active == rhs.active)||((this.active!= null)&&this.active.equals(rhs.active))))&&((this.description == rhs.description)||((this.description!= null)&&this.description.equals(rhs.description))))&&((this.variantGroups == rhs.variantGroups)||((this.variantGroups!= null)&&this.variantGroups.equals(rhs.variantGroups))))&&((this.inventory == rhs.inventory)||((this.inventory!= null)&&this.inventory.equals(rhs.inventory))))&&((this.checkoutUrl == rhs.checkoutUrl)||((this.checkoutUrl!= null)&&this.checkoutUrl.equals(rhs.checkoutUrl))))&&((this.price == rhs.price)||((this.price!= null)&&this.price.equals(rhs.price))))&&((this.name == rhs.name)||((this.name!= null)&&this.name.equals(rhs.name))))&&((this.id == rhs.id)||((this.id!= null)&&this.id.equals(rhs.id))))&&((this.categories == rhs.categories)||((this.categories!= null)&&this.categories.equals(rhs.categories))))&&((this.permalink == rhs.permalink)||((this.permalink!= null)&&this.permalink.equals(rhs.permalink))))&&((this.updated == rhs.updated)||((this.updated!= null)&&this.updated.equals(rhs.updated))));
     }
 

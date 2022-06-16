@@ -10,7 +10,7 @@ public class Price__1 implements Serializable
 
     @SerializedName("raw")
     @Expose
-    private Integer raw;
+    private Long raw;
     @SerializedName("formatted")
     @Expose
     private String formatted;
@@ -36,7 +36,7 @@ public class Price__1 implements Serializable
      * @param raw
      * @param formattedWithSymbol
      */
-    public Price__1(Integer raw, String formatted, String formattedWithSymbol, String formattedWithCode) {
+    public Price__1(Long raw, String formatted, String formattedWithSymbol, String formattedWithCode) {
         super();
         this.raw = raw;
         this.formatted = formatted;
@@ -44,11 +44,11 @@ public class Price__1 implements Serializable
         this.formattedWithCode = formattedWithCode;
     }
 
-    public Integer getRaw() {
+    public Long getRaw() {
         return raw;
     }
 
-    public void setRaw(Integer raw) {
+    public void setRaw(Long raw) {
         this.raw = raw;
     }
 

@@ -88,7 +88,7 @@ public class ProductItemActivity extends AppCompatActivity implements View.OnCli
                         Toast.makeText(getBaseContext(), "Product already in cart", Toast.LENGTH_SHORT).show();
                     } else {
                         ref.child("cart").child("product").child(id+product.getName()).setValue(product);
-                        ref.child("cart").child("product").child(id+product.getName()).child("id").setValue(id+1);
+                        ref.child("cart").child("product").child(id+product.getName()).child("id").setValue(""+(id+1));
                         ref.child("cart").child("product").child(id+product.getName()).child("quantity").setValue(1, new DatabaseReference.CompletionListener() {
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
