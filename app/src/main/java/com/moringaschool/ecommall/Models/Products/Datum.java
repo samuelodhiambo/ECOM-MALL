@@ -12,6 +12,10 @@ public class Datum implements Serializable
     @SerializedName("id")
     @Expose
     private String id;
+
+    @SerializedName("uid")
+    @Expose
+    private String uid;
     @SerializedName("created")
     @Expose
     private Integer created;
@@ -80,9 +84,10 @@ public class Datum implements Serializable
      * @param image
      * @param relatedProducts
      */
-    public Datum(String id, Integer created, Integer quantity, Integer updated, Boolean active, String permalink, String name, String description, Price price, Inventory inventory, CheckoutUrl checkoutUrl, List<VariantGroup> variantGroups, List<Category> categories, Image image, List<RelatedProduct> relatedProducts) {
+    public Datum(String id, String uid, Integer created, Integer quantity, Integer updated, Boolean active, String permalink, String name, String description, Price price, Inventory inventory, CheckoutUrl checkoutUrl, List<VariantGroup> variantGroups, List<Category> categories, Image image, List<RelatedProduct> relatedProducts) {
         super();
         this.id = id;
+        this.uid = uid;
         this.created = created;
         this.quantity = quantity;
         this.updated = updated;
@@ -234,6 +239,14 @@ public class Datum implements Serializable
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     @Override
