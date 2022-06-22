@@ -1,39 +1,28 @@
 package com.moringaschool.ecommall.ui;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.moringaschool.ecommall.Adapters.FirebaseCartAdapter;
 import com.moringaschool.ecommall.Adapters.FirebaseCartViewHolder;
 import com.moringaschool.ecommall.Models.Products.Datum;
-import com.moringaschool.ecommall.Models.Products.Datum_2;
 import com.moringaschool.ecommall.R;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,11 +34,13 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     TableLayout cartTable;
     @BindView(R.id.cartRecycler)
     RecyclerView cartRecycler;
+    @BindView(R.id.cartConstraint)
+    ConstraintLayout cartConstraint;
     private Datum cartProducts = new Datum();
 
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference ref = database.getReferenceFromUrl("https://ecom-mall-default-rtdb.firebaseio.com/cart/product/");
-    private FirebaseRecyclerAdapter<Datum, FirebaseCartViewHolder> firebaseAdapter;
+    private FirebaseCartAdapter<Datum, FirebaseCartViewHolder> firebaseAdapter;
     private DatabaseReference ref2;
 
 
@@ -100,6 +91,42 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         setUpFirebaseAdapter();
         cartRecycler.setVisibility(View.VISIBLE);
 
+        enableSwipeToDeleteAndUndo();
+
+    }
+
+    private void enableSwipeToDeleteAndUndo() {
+        SwipeToDeleteCallback swipeToDeleteCallback = new SwipeToDeleteCallback(this) {
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+
+
+                final int position = viewHolder.getAdapterPosition();
+                final Datum item = firebaseAdapter.getItem(position);
+
+                firebaseAdapter.removeItem(position);
+
+
+                Snackbar snackbar = Snackbar
+                        .make(cartConstraint, "Item was removed from the list.", Snackbar.LENGTH_LONG);
+                snackbar.setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        firebaseAdapter.restoreItem(item, position);
+                        cartRecycler.setAdapter(firebaseAdapter);
+                        cartRecycler.scrollToPosition(position);
+                    }
+                });
+
+                snackbar.setActionTextColor(Color.YELLOW);
+                snackbar.show();
+
+            }
+        };
+
+        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeToDeleteCallback);
+        itemTouchhelper.attachToRecyclerView(cartRecycler);
     }
 
     private void setUpFirebaseAdapter(){
@@ -108,18 +135,28 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                         .setQuery(ref, Datum.class)
                         .build();
 
-        firebaseAdapter = new FirebaseRecyclerAdapter<Datum, FirebaseCartViewHolder>(options) {
-            @Override
-            protected void onBindViewHolder(@NonNull FirebaseCartViewHolder firebaseCartViewHolder, int position, @NonNull Datum cartProduct) {
-                firebaseCartViewHolder.bindCartProduct(cartProduct);
-            }
+        firebaseAdapter = new FirebaseCartAdapter<Datum, FirebaseCartViewHolder>(options) {
+//            @Override
+//            protected void onBindViewHolder(@NonNull FirebaseCartViewHolder firebaseCartViewHolder, int position, @NonNull Datum cartProduct) {
+//                firebaseCartViewHolder.bindCartProduct(cartProduct);
+//            }
 
-            @NonNull
-            @Override
-            public FirebaseCartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_item, parent, false);
-                return new FirebaseCartViewHolder(view);
-            }
+//            @NonNull
+//            @Override
+//            public FirebaseCartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_item, parent, false);
+//                return new FirebaseCartViewHolder(view);
+//            }
+
+//            public void removeItem(int position) {
+//                options.getSnapshots().remove(position);
+//                notifyItemRemoved(position);
+//            }
+//
+//            public void restoreItem(Datum product, int position) {
+//                options.getSnapshots().add(position, product);
+//                notifyItemInserted(position);
+//            }
         };
 
         cartRecycler.setLayoutManager(new LinearLayoutManager(this));
